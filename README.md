@@ -4,6 +4,16 @@ A Flask-based demo e-commerce site with multiple recommendation algorithms using
 
 ---
 
+## Demo
+
+
+
+
+https://github.com/user-attachments/assets/f83ac153-1ffc-48c0-b88d-bedb5c4abf9f
+
+
+
+
 ## Technologies Used
 
 - **Python 3**

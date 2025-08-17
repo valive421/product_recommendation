@@ -13,6 +13,10 @@ https://github.com/user-attachments/assets/f83ac153-1ffc-48c0-b88d-bedb5c4abf9f
 
 
 
+## LIVE :- 
+only limited memory so it might crash
+https://product-recommendation-kqki.onrender.com
+
 
 ## Technologies Used
 

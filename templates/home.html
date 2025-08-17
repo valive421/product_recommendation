@@ -1,0 +1,151 @@
+<!--  homepage:  layout, clear sections, cards, and navigation -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demo E-Commerce Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .navbar {
+            background: #0074d9;
+            color: #fff;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a, .navbar span {
+            color: #fff;
+            margin-left: 16px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin: 32px 0 24px 0;
+        }
+        .section-title {
+            color: #0074d9;
+            margin-bottom: 12px;
+        }
+        .search-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .search-form input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+        }
+        .search-form input[type="submit"] {
+            padding: 8px 16px;
+            background: #0074d9;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-form input[type="submit"]:hover {
+            background: #005fa3;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        .product-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin: 0;
+            padding: 16px;
+            width: 220px;
+            box-shadow: 0 2px 8px #eee;
+            text-align: center;
+            transition: box-shadow 0.2s;
+        }
+        .product-card:hover {
+            box-shadow: 0 4px 16px #ccc;
+        }
+        .product-card img {
+            margin-bottom: 10px;
+            border-radius: 6px;
+            background: #f8f8f8;
+        }
+        .product-card h3, .product-card h4 {
+            font-size: 1.1em;
+            margin: 8px 0 4px 0;
+        }
+        .product-card p {
+            margin: 2px 0;
+            font-size: 0.97em;
+        }
+        .rec-label {
+            font-size: 1.1em;
+            color: #222;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .not-found {
+            color: #c00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <span>Demo E-Commerce</span>
+        <div>
+            {% if session.user_id %}
+                <span>Hi, {{ session.user_id }}</span>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="section" style="margin-bottom:0;">
+        <form method="post" class="search-form">
+            <input type="text" name="search" placeholder="Enter product name" required>
+            <input type="submit" value="Search">
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Recommendations Section -->
+    <div class="section">
+        <div class="section-title">{{ rec_type }}</div>
+        {% if rating_recs is not none %}
+        <div class="product-list">
+            {% for p in rating_recs.itertuples() %}
+            <div class="product-card">
+                <img src="{{ p.ImageURL }}" alt="{{ p.Name }}" width="120" height="120">
+                <h3>
+                    <a href="{{ url_for('product_detail', prod_id=p.ProdID) }}">{{ p.Name }}</a>
+                </h3>
+                <p>Brand: {{ p.Brand }}</p>
+                <p>Rating: <b>{{ "%.1f"|format(p.Rating) }}</b></p>
+            </div>
+            {% endfor %}
+        </div>
+        {% elif rec_type.startswith('No product found') %}
+            <div class="not-found">{{ rec_type }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

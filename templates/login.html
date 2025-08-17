@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Demo E-Commerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .login-container {
+            max-width: 350px;
+            margin: 80px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px #eee;
+            padding: 32px 28px 24px 28px;
+            text-align: center;
+        }
+        .login-container h1 {
+            color: #0074d9;
+            margin-bottom: 18px;
+        }
+        .login-container input[type="text"] {
+            width: 90%;
+            padding: 8px;
+            margin-bottom: 18px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+        }
+        .login-container input[type="submit"] {
+            padding: 8px 24px;
+            background: #0074d9;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-container input[type="submit"]:hover {
+            background: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div class="login-container">
+        <h1>Login</h1>
+        <form method="post">
+            <input type="text" name="username" placeholder="Username (any string)" required>
+            <br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</body>
+</html>

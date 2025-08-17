@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <a href="{{ url_for('home') }}">Home</a>
+    <h1>Get Recommendations</h1>
+    <!-- Recommendation Form -->
+    <form method="post">
+        <label>User ID: <input type="text" name="user_id"></label><br>
+        <label>Product Name: <input type="text" name="item_name"></label><br>
+        <label>Recommendation Type:
+            <select name="rec_type">
+                <option value="rating">Trending (Rating-based)</option>
+                <option value="content">Content-based</option>
+                <option value="user">User-based</option>
+                <option value="hybrid">Hybrid</option>
+            </select>
+        </label><br>
+        <input type="submit" value="Get Recommendations">
+    </form>
+    <!-- Recommendations List -->
+    {% if recommendations is not none %}
+        <h2>Recommendations</h2>
+        <ul>
+        {% for rec in recommendations.itertuples() %}
+            <li>
+                <img src="{{ rec.ImageURL }}" alt="{{ rec.Name }}" width="60" height="60">
+                {{ rec.Name }} (Brand: {{ rec.Brand }}, Rating: {{ rec.Rating }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

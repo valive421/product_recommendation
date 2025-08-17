@@ -9,14 +9,14 @@ app = Flask(
     template_folder='templates',
     static_folder='static'
 )
-app.secret_key = 'your_secret_key'  # Needed for session
+app.secret_key = 'your_secret_key'  
 
-# Fix: Update DATA_PATH to match the actual file location inside the 'project/Data' directory
+
 DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Data', 'marketing_sample_for_walmart_com-walmart_com_product_review__20200701_20201231__5k_data (1).tsv')
 df = pd.read_csv(DATA_PATH, sep='\t')
 
 # Preprocess columns (as in notebook)
-# Fix FutureWarning: Use .fillna({...}, inplace=True) on the whole DataFrame instead of chained assignment
+
 df.fillna({
     'Product Rating': 0,
     'Product Reviews Count': 0,
@@ -170,4 +170,6 @@ def recommend():
     return render_template('recommend.html', recommendations=None)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
